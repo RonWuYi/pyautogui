@@ -1,4 +1,4 @@
-from AllWay import *
+from python2.AllWay import *
 import time
 
 # TabQieHuan()
