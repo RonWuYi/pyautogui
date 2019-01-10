@@ -77,9 +77,10 @@ else:
 
     out_error_list = obj.communicate('cd ~/.ssh/')
     if out_error_list[1] == '':
-        print('~/.ssh1/ exist')
+        print('~/.ssh/ exist')
     else:
-        print('~/.ssh1/ does not exist or git ssh key file not in default folder')
+        print('~/.ssh/ does not exist or git ssh key file not in default folder')
+
 
 for files in os.listdir(sshpath):
     if len(files) > 0:
