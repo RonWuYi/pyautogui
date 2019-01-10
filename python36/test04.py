@@ -14,10 +14,3 @@ def gitconnectioncheck(whichgit):
         except AttributeError as e:
             print(e)
         return False
-
-
-
-# out_text = out_bytes.decode('utf-8')
-# print(type(out_bytes))
-# print(out_text)
-# print(type(out_text))
