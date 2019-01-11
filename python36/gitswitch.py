@@ -68,18 +68,21 @@ HubData = {}
 filemd5 = None
 checkfilemd5 = None
 
-
-if InLinux():
-    pass
-else:
-    obj = subprocess.Popen([gitpath], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                           universal_newlines=True)
-
-    out_error_list = obj.communicate('cd ~/.ssh/')
-    if out_error_list[1] == '':
-        print('~/.ssh/ exist')
-    else:
-        print('~/.ssh/ does not exist or git ssh key file not in default folder')
+# todo: implemented it
+# if InLinux():
+#     if os.path.exists(sshpath):
+#         if not os.path.isfile(os.path.join(sshpath, 'id_rsa.pub')):
+#             for file in os.listdir(githubpath):
+#                 os.system('cp -f {} {}'.format(os.path.join(githubpath, file), sshpath))
+# else:
+#     obj = subprocess.Popen([gitpath], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+#                            universal_newlines=True)
+#
+#     out_error_list = obj.communicate('cd ~/.ssh/')
+#     if out_error_list[1] == '':
+#         print('~/.ssh/ exist')
+#     else:
+#         print('~/.ssh/ does not exist or git ssh key file not in default folder')
 
 
 for files in os.listdir(sshpath):
