@@ -14,11 +14,15 @@ sshpath = '/home/hdc/.ssh/'
 gitlabaddress = 'git@gitlab.emea.irdeto.com'
 githubaddress = 'git@github.com'
 
+
 def md5(fname):
     hash_md5 = hashlib.md5()
     with open(fname, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             hash_md5.update(chunk)
+    # for chunk in iter(lambda: fname.open.read(4096), b""):
+    #     hash_md5.update(chunk)
+    # fname.close()
     return hash_md5.hexdigest()
 
 
@@ -36,8 +40,8 @@ def filepermission():
         return True
 
 
-def InLinux():
-    if platform.system() == 'Linux' :
+def inlinux():
+    if platform.system() == 'Linux':
         return True
     else:
         return False
@@ -116,14 +120,14 @@ for files in os.listdir(sshpath):
 
 if filemd5 in LabData.values():
     for file in os.listdir(githubpath):
-        os.system('cp -f {} {}'.format(os.path.join(githubpath, file), sshpath ))
+        os.system('cp -f {} {}'.format(os.path.join(githubpath, file), sshpath))
 
     for files in os.listdir(sshpath):
         if files == 'id_rsa.pub':
             checkfilemd5 = md5(os.path.join(sshpath, files))
             break
-    # if platform.system() == 'Linux' and isgrolupreadable(sshpath) != '700' and  isgrolupreadable(os.path.join(sshpath, 'id_rsa.pub')) != '600':
-    if InLinux():
+
+    if inlinux():
         if not filepermission():
             os.system('chmod 700 {}'.format(sshpath))
             time.sleep(1)
@@ -144,14 +148,14 @@ if filemd5 in LabData.values():
         print("Switch to github Internet failed!")
 else:
     for file in os.listdir(gitlabpath):
-        os.system('cp -f {} {}'.format(os.path.join(gitlabpath, file), sshpath ))
+        os.system('cp -f {} {}'.format(os.path.join(gitlabpath, file), sshpath))
 
     for files in os.listdir(sshpath):
         if files == 'id_rsa.pub':
             checkfilemd5 = md5(os.path.join(sshpath, files))
             break
 
-    if InLinux():
+    if inlinux():
         if not filepermission():
             os.system('chmod 700 {}'.format(sshpath))
             time.sleep(1)
@@ -171,4 +175,3 @@ else:
             print('failed change to git lab')
     else:
         print("Switch to gitlab EMEA failed!")
-
