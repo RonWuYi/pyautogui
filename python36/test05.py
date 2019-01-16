@@ -1,4 +1,8 @@
-import os
-import zipfile
+from python36.customerdata.ftp import myftp
 
-from python36.customerdata.util import *
+from pathlib import Path
+# myftp('~/Videos/')
+
+home = str(Path.home())
+
+print(home)

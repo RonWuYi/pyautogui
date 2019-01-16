@@ -4,11 +4,13 @@ import platform
 import subprocess
 import time
 
-gitpath = "C:\\Program Files\\Git\\bin\\bash.exe"
+from pathlib import Path
+from python36.customerdata.ftp import myftp
+# gitpath = "C:\\Program Files\\Git\\bin\\bash.exe"
 
-gitlabpath = '/home/hdc/.ssh/gitlab/'
-githubpath = '/home/hdc/.ssh/github/'
-sshpath = '/home/hdc/.ssh/'
+# gitlabpath = '/home/hdc/.ssh/gitlab/'
+# githubpath = '/home/hdc/.ssh/github/'
+# sshpath = '/home/hdc/.ssh/'
 
 gitlabaddress = 'git@gitlab.emea.irdeto.com'
 githubaddress = 'git@github.com'
@@ -98,18 +100,42 @@ def gitconnectioncheck(whichgit):
             print(e)
             return False
 
-# todo: implemented it
-# if InLinux():
-#     if os.path.exists(sshpath):
-#         if not os.path.isfile(os.path.join(sshpath, 'id_rsa.pub')):
-#             for file in os.listdir(githubpath):
-#                 os.system('cp -f {} {}'.format(os.path.join(githubpath, file), sshpath))
-# else:
-#     obj = subprocess.Popen([gitpath], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-#                            universal_newlines=True)
-#
-#     out_error_list = obj.communicate('cd ~/.ssh/')
-#     if out_error_list[1] == '':
-#         print('~/.ssh/ exist')
-#     else:
-#         print('~/.ssh/ does not exist or git ssh key file not in default folder')
+
+def oscheck():
+    global gitlabpath
+    global githubpath
+    global sshpath
+    if inlinux():
+        gitlabpath = os.path.join(str(Path.home()), '.ssh/{}/'.format('gitlab'))
+        # githubpath = '/home/hdc/.ssh/github/'
+        githubpath = os.path.join(str(Path.home()), '.ssh/{}/'.format('github'))
+        # sshpath = '/home/hdc/.ssh/'
+        sshpath = os.path.join(str(Path.home()), '.ssh/')
+
+        if os.path.exists(sshpath):
+            if not os.path.isfile(os.path.join(sshpath, 'id_rsa.pub')):
+                for file in os.listdir(githubpath):
+                    os.system('cp -f {} {}'.format(os.path.join(githubpath, file), sshpath))
+        else:
+            # try:
+            os.system('cd ~/')
+            # except
+    else:
+
+        gitlabpath = os.path.join(str(Path.home()), '.ssh\\{}\\'.format('gitlab'))
+        githubpath = os.path.join(str(Path.home()), '.ssh\\{}\\'.format('github'))
+        sshpath = os.path.join(str(Path.home()), '.ssh\\')
+
+        if os.path.exists(sshpath):
+
+        # obj = subprocess.Popen([gitpath], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        #                        universal_newlines=True)
+        #
+        # out_error_list = obj.communicate('cd ~/.ssh/')
+        # if out_error_list[1] == '':
+            print('~/.ssh/ exist')
+            if not os.path.isfile(os.path.join(sshpath, 'id_rsa.pub')):
+                for file in os.listdir(githubpath):
+                    os.system('cp -f {} {}'.format(os.path.join(githubpath, file), sshpath))
+        else:
+            print('~/.ssh/ does not exist or git ssh key file not in default folder')
