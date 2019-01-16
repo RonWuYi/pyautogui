@@ -2,6 +2,7 @@ import hashlib
 import os
 import platform
 import subprocess
+import time
 
 gitpath = "C:\\Program Files\\Git\\bin\\bash.exe"
 
@@ -12,8 +13,8 @@ sshpath = '/home/hdc/.ssh/'
 gitlabaddress = 'git@gitlab.emea.irdeto.com'
 githubaddress = 'git@github.com'
 
-LabData = {}
-HubData = {}
+# LabData = {}
+# HubData = {}
 filemd5 = None
 checkfilemd5 = None
 
@@ -44,6 +45,39 @@ def inlinux():
         return True
     else:
         return False
+
+
+def filecheck(valuesa, valuesb):
+    global checkfilemd5
+
+    for files in os.listdir(sshpath):
+        if files == 'id_rsa.pub':
+            checkfilemd5 = md5(os.path.join(sshpath, files))
+
+    # if checkfilemd5 in HubData.values():
+    if checkfilemd5 in valuesa:
+        os.system('git config --global user.name "RonWuYi"')
+        time.sleep(1)
+        os.system('git config --global user.email "lyshmily@outlook.com"')
+        time.sleep(1)
+        print('git files changed to github Internet')
+        if gitconnectioncheck(githubaddress):
+            print('change to git hub success')
+        else:
+            print('failed change to git hub')
+    elif checkfilemd5 in valuesb:
+        # if checkfilemd5 in LabData.values():
+        os.system('git config --global user.name "ron.wu"')
+        time.sleep(1)
+        os.system('git config --global user.email "ron.wu@irdeto.com"')
+        time.sleep(1)
+        print('git files changed to gitlab EMEA')
+        if gitconnectioncheck(gitlabaddress):
+            print('change to git lab success')
+        else:
+            print('failed change to git lab')
+    else:
+        print("Switch git failed!")
 
 
 def gitconnectioncheck(whichgit):
