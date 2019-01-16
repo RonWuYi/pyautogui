@@ -13,10 +13,9 @@ sshpath = '/home/hdc/.ssh/'
 gitlabaddress = 'git@gitlab.emea.irdeto.com'
 githubaddress = 'git@github.com'
 
-# LabData = {}
-# HubData = {}
-filemd5 = None
-checkfilemd5 = None
+# filemd5 = None
+# checkfilemd5 = None
+
 
 def md5(fname):
     hash_md5 = hashlib.md5()
@@ -114,6 +113,3 @@ def gitconnectioncheck(whichgit):
 #         print('~/.ssh/ exist')
 #     else:
 #         print('~/.ssh/ does not exist or git ssh key file not in default folder')
-
-
-
