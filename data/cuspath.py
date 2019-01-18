@@ -36,7 +36,7 @@ class CUSPATH:
             zip_ref.close()
             os.remove(os.path.join(str(Path.home()), 'ssh.zip'))
         else:
-            print('file already exist')
+            print('id_rsa.pub file already exist')
 
     @staticmethod
     def inlinux():

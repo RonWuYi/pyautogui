@@ -2,7 +2,7 @@ import os
 import json
 import hashlib
 
-from python36.customerdata.cuspath import CUSPATH
+from .cuspath import CUSPATH
 
 MyPath = CUSPATH()
 
@@ -16,10 +16,12 @@ def md5(fname):
 
 
 class filehash:
-    def __init__(self, labdata = None, hubdata = None, filemd5 = None):
+    def __init__(self, labdata = {}, hubdata = {}, filemd5 = 0):
         self.LabData = labdata
         self.HubData = hubdata
         self.filemd5 = filemd5
+        self.loadjson()
+        self.currentfile()
 
     # @staticmethod
     def loadjson(self):
