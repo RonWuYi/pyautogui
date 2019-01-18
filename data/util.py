@@ -1,23 +1,13 @@
-import hashlib
 import os
-import platform
 import subprocess
 import time
 
-from python36.customerdata.cuspath import CUSPATH
-from python36.customerdata.ftp import myftp
+from .cuspath import CUSPATH
 from .filehash import md5
-# gitpath = "C:\\Program Files\\Git\\bin\\bash.exe"
-
-# gitlabpath = '/home/hdc/.ssh/gitlab/'
-# githubpath = '/home/hdc/.ssh/github/'
-# sshpath = '/home/hdc/.ssh/'
 
 gitlabaddress = 'git@gitlab.emea.irdeto.com'
 githubaddress = 'git@github.com'
 
-# filemd5 = None
-# checkfilemd5 = None
 MyPath = CUSPATH()
 
 
@@ -33,13 +23,6 @@ def filepermission():
         return False
     else:
         return True
-
-
-def inlinux():
-    if platform.system() == 'Linux':
-        return True
-    else:
-        return False
 
 
 def filecheck(valuesa, valuesb):

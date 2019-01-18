@@ -1,9 +1,9 @@
 import os
 import zipfile
 import platform
+
 from pathlib import Path
 from .ftp import myftp
-# from .util import inlinux
 
 
 class CUSPATH:
@@ -29,12 +29,12 @@ class CUSPATH:
         self.gitkey = os.path.join(self.sshpath, 'id_rsa.pub')
 
     def rootpathcheck(self):
-        # if inlinux:
         if not os.path.exists(self.sshpath):
             myftp(str(Path.home()))
-            zip_ref = zipfile.ZipFile(os.path.join(self.sshpath, 'ssh.zip'), 'r')
+            zip_ref = zipfile.ZipFile(os.path.join(str(Path.home()), 'ssh.zip'), 'r')
             zip_ref.extractall(path=self.sshpath)
             zip_ref.close()
+            os.remove(os.path.join(str(Path.home()), 'ssh.zip'))
         else:
             print('file already exist')
 
@@ -44,11 +44,3 @@ class CUSPATH:
             return True
         else:
             return False
-
-    def oscheck(self):
-        pass
-        # if not os.path.isfile(self.gitkey):
-        #     for file in os.listdir(self.githubpath):
-        #         os.system('cp -f {} {}'.format(os.path.join(self.githubpath, file), self.sshpath))
-        # else:
-        #     pass
