@@ -1,4 +1,5 @@
 import os
+import zipfile
 
 from pathlib import Path
 from .ftp import myftp
@@ -30,6 +31,10 @@ class CUSPATH:
         # if inlinux:
         if not os.path.exists(self.sshpath):
             myftp(str(Path.home()))
+        zip_ref = zipfile.ZipFile(os.path.join(self.sshpath, 'ssh.zip'), 'r')
+        zip_ref.extractall(path=self.sshpath)
+        zip_ref.close()
+
 
                 # if self.sshpath
 
