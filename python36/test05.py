@@ -1,8 +1,6 @@
-from python36.customerdata.ftp import myftp
+from python36.customerdata.cuspath import CUSPATH
 
-from pathlib import Path
-# myftp('~/Videos/')
 
-home = str(Path.home())
+mypath = CUSPATH()
 
-print(home)
+mypath.rootpathcheck()
