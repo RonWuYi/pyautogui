@@ -1,6 +1,7 @@
 import os
 import subprocess
 import time
+import sys
 
 from .cuspath import CUSPATH
 from .filehash import md5
@@ -45,9 +46,9 @@ def filecheck(valuesa, valuesb, osbool):
         time.sleep(1)
         print('git files changed to github Internet')
         if gitconnectioncheck(githubaddress, CUSPATH.inlinux()):
-            print('change to git hub success')
+            print('Connect to github successfully')
         else:
-            print('failed change to git hub')
+            print('Connect to github failed')
     elif checkfilemd5 in valuesb:
         # if checkfilemd5 in LabData.values():
         os.system('git config --global user.name "ron.wu"')
@@ -56,9 +57,9 @@ def filecheck(valuesa, valuesb, osbool):
         time.sleep(1)
         print('git files changed to gitlab EMEA')
         if gitconnectioncheck(gitlabaddress, CUSPATH.inlinux()):
-            print('change to git lab success')
+            print('Connect to gitlab successfully')
         else:
-            print('failed change to git lab')
+            print('Connect to gitlab failed')
     else:
         print("Switch git failed!")
 
@@ -74,7 +75,7 @@ def gitconnectioncheck(whichgit, osbool):
             try:
                 code = e.returncode
                 # print(out_bytes)
-                if out_bytes[0:2] == b'Hi' and code == 1:
+                if out_bytes[0:2] == b'Hi' or out_bytes[0:7] == b'Welcome' and code == 1:
                     return True
                 # print(code)
                 else:
@@ -83,10 +84,31 @@ def gitconnectioncheck(whichgit, osbool):
                 print(e)
                 return False
     else:
-        os.chdir(bspath)
-        out_bytes = os.popen('bash -c {}'.format(whichgit))
-        if out_bytes[0:2] == b'Hi':
-            return True
+        if bspath not in sys.path:
+            sys.path.append(bspath)
+
+        os.system('cd {}'.format(bspath))
+        try:
+            cmdoutput = subprocess.check_output('{} -c "ssh -T {}"'.format(bsfilepath, whichgit), timeout=5, stderr=subprocess.STDOUT)
+            if cmdoutput[0:2] == b'Hi' or cmdoutput[0:7] == b'Welcome':
+
+                return True
+                # print(code)
+            else:
+                return False
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
+            out_bytes = e.output
+            try:
+                code = e.returncode
+                # print(out_bytes)
+                if out_bytes[0:2] == b'Hi' or out_bytes[0:7] == b'Welcome' and code == 1:
+                    return True
+                # print(code)
+                else:
+                    return False
+            except AttributeError as e:
+                print(e)
+                return False
         # print(code)
-        else:
-            return False
+        # else:
+        #     return False
