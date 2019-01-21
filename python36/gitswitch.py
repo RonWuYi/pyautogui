@@ -49,7 +49,7 @@ class SWITCH:
             #         os.system('chmod 600 {}'.format(os.path.join(MyPath.sshpath, 'id_rsa')))
             # else:
             #     print("Switch to gitlab EMEA failed!")
-        filecheck(curfilehas.HubData.values(), curfilehas.LabData.values())
+        filecheck(curfilehas.HubData.values(), curfilehas.LabData.values(), CUSPATH.inlinux())
 
 
 if __name__ == '__main__':

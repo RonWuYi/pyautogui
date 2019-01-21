@@ -8,6 +8,9 @@ from .filehash import md5
 gitlabaddress = 'git@gitlab.emea.irdeto.com'
 githubaddress = 'git@github.com'
 
+bspath = "C:\\Program Files\\Git\\bin\\"
+bsfilepath = "C:\\Program Files\\Git\\bin\\bash.exe"
+
 MyPath = CUSPATH()
 
 
@@ -25,9 +28,11 @@ def filepermission():
         return True
 
 
-def filecheck(valuesa, valuesb):
+#def filecheck(valuesa, valuesb, osbool):
+def filecheck(valuesa, valuesb, osbool):
     global checkfilemd5
 
+    # if osbool:
     for files in os.listdir(MyPath.sshpath):
         if files == 'id_rsa.pub':
             checkfilemd5 = md5(os.path.join(MyPath.sshpath, files))
@@ -39,7 +44,7 @@ def filecheck(valuesa, valuesb):
         os.system('git config --global user.email "lyshmily@outlook.com"')
         time.sleep(1)
         print('git files changed to github Internet')
-        if gitconnectioncheck(githubaddress):
+        if gitconnectioncheck(githubaddress, CUSPATH.inlinux()):
             print('change to git hub success')
         else:
             print('failed change to git hub')
@@ -50,7 +55,7 @@ def filecheck(valuesa, valuesb):
         os.system('git config --global user.email "ron.wu@irdeto.com"')
         time.sleep(1)
         print('git files changed to gitlab EMEA')
-        if gitconnectioncheck(gitlabaddress):
+        if gitconnectioncheck(gitlabaddress, CUSPATH.inlinux()):
             print('change to git lab success')
         else:
             print('failed change to git lab')
@@ -58,21 +63,30 @@ def filecheck(valuesa, valuesb):
         print("Switch git failed!")
 
 
-def gitconnectioncheck(whichgit):
-    try:
-        os.system('ssh-add -D')
-        subprocess.check_output(["ssh", "-T", whichgit], timeout=3, stderr=subprocess.STDOUT)
-        return True
-    except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
-        out_bytes = e.output
+def gitconnectioncheck(whichgit, osbool):
+    if osbool:
         try:
-            code = e.returncode
-            # print(out_bytes)
-            if out_bytes[0:2] == b'Hi' and code == 1:
-                return True
-            # print(code)
-            else:
+            os.system('ssh-add -D')
+            subprocess.check_output(["ssh", "-T", whichgit], timeout=3, stderr=subprocess.STDOUT)
+            return True
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
+            out_bytes = e.output
+            try:
+                code = e.returncode
+                # print(out_bytes)
+                if out_bytes[0:2] == b'Hi' and code == 1:
+                    return True
+                # print(code)
+                else:
+                    return False
+            except AttributeError as e:
+                print(e)
                 return False
-        except AttributeError as e:
-            print(e)
+    else:
+        os.chdir(bspath)
+        out_bytes = os.popen('bash -c {}'.format(whichgit))
+        if out_bytes[0:2] == b'Hi':
+            return True
+        # print(code)
+        else:
             return False
