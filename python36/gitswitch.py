@@ -12,7 +12,6 @@ class SWITCH:
     @staticmethod
     def run():
         MyPath.rootpathcheck()
-
         if CUSPATH.inlinux():
             # for i in curfilehas.LabData.values():
             #     print(i)
@@ -30,8 +29,6 @@ class SWITCH:
                 os.system('chmod 600 {}'.format(os.path.join(MyPath.sshpath, 'id_rsa.pub')))
                 time.sleep(1)
                 os.system('chmod 600 {}'.format(os.path.join(MyPath.sshpath, 'id_rsa')))
-                # else:
-                #     print("Switch to github Internet failed!")
         else:
             if curfilehas.filemd5 in curfilehas.LabData.values():
                 for file in os.listdir(MyPath.githubpath):
@@ -39,17 +36,8 @@ class SWITCH:
             else:
                 for file in os.listdir(MyPath.gitlabpath):
                     shutil.copy(os.path.join(MyPath.gitlabpath, file), MyPath.sshpath)
-                #os.system('cp -f {} {}'.format(os.path.join(MyPath.gitlabpath, file), MyPath.sshpath))
-            # if CUSPATH.inlinux():
-            #     if not filepermission():
-            #         os.system('chmod 700 {}'.format(MyPath.sshpath))
-            #         time.sleep(1)
-            #         os.system('chmod 600 {}'.format(os.path.join(MyPath.sshpath, 'id_rsa.pub')))
-            #         time.sleep(1)
-            #         os.system('chmod 600 {}'.format(os.path.join(MyPath.sshpath, 'id_rsa')))
-            # else:
-            #     print("Switch to gitlab EMEA failed!")
-        filecheck(curfilehas.HubData.values(), curfilehas.LabData.values(), CUSPATH.inlinux())
+
+        filecheck(curfilehas.HubData.values(), curfilehas.LabData.values())
 
 
 if __name__ == '__main__':

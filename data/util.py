@@ -30,7 +30,7 @@ def filepermission():
 
 
 #def filecheck(valuesa, valuesb, osbool):
-def filecheck(valuesa, valuesb, osbool):
+def filecheck(valuesa, valuesb):
     global checkfilemd5
 
     # if osbool:
@@ -109,6 +109,17 @@ def gitconnectioncheck(whichgit, osbool):
             except AttributeError as e:
                 print(e)
                 return False
-        # print(code)
-        # else:
-        #     return False
+
+
+def folder_check():
+    if os.path.isdir(MyPath.sshpath):
+        return True
+    else:
+        return False
+
+
+def file_check():
+    if len(os.listdir(MyPath.sshpath)) == 0:
+        return False
+    else:
+        return True

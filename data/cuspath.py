@@ -10,14 +10,17 @@ class CUSPATH:
     def __init__(self, gitlabpath=None,
                  githubpath=None, sshpath=None,
                  gitkey=None):
+        # self.osbool = inlinux()
         self.gitlabpath = gitlabpath
         self.githubpath = githubpath
         self.sshpath = sshpath
         self.gitkey = gitkey
-        self.ospath(CUSPATH.inlinux())
+        # self.ospath(inlinux())
+        self.ospath()
+        self.rootpathcheck()
 
-    def ospath(self, inlinux):
-        if inlinux:
+    def ospath(self):
+        if CUSPATH.inlinux():
             self.gitlabpath = os.path.join(str(Path.home()), '.ssh/{}/'.format('gitlab'))
             self.githubpath = os.path.join(str(Path.home()), '.ssh/{}/'.format('github'))
             self.sshpath = os.path.join(str(Path.home()), '.ssh/')
