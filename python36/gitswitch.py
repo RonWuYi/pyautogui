@@ -13,9 +13,6 @@ class SWITCH:
     def run():
         MyPath.rootpathcheck()
         if CUSPATH.inlinux():
-            # for i in curfilehas.LabData.values():
-            #     print(i)
-            # print(curfilehas.LabData.values())
             if curfilehas.filemd5 in curfilehas.LabData.values():
                 for file in os.listdir(MyPath.githubpath):
                     os.system('cp -f {} {}'.format(os.path.join(MyPath.githubpath, file), MyPath.sshpath))

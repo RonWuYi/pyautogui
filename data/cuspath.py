@@ -38,6 +38,12 @@ class CUSPATH:
             zip_ref.extractall(path=self.sshpath)
             zip_ref.close()
             os.remove(os.path.join(str(Path.home()), 'ssh.zip'))
+        elif len(os.listdir(self.sshpath)) == 0:
+            myftp(str(Path.home()))
+            zip_ref = zipfile.ZipFile(os.path.join(str(Path.home()), 'ssh.zip'), 'r')
+            zip_ref.extractall(path=self.sshpath)
+            zip_ref.close()
+            os.remove(os.path.join(str(Path.home()), 'ssh.zip'))
         else:
             print('id_rsa.pub file already exist')
 
