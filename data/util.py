@@ -21,12 +21,15 @@ def isgrolupreadable(filepath):
 
 
 def filepermission():
-    if isgrolupreadable(MyPath.sshpath) != '700' and \
-            isgrolupreadable(
-                    os.path.join(MyPath.sshpath, 'id_rsa.pub')) != '600':
-        return False
-    else:
+    if int(isgrolupreadable(MyPath.sshpath)) > 600 and \
+        int(isgrolupreadable(
+                    os.path.join(MyPath.sshpath, 'id_rsa.pub'))) > 600:
+    # if isgrolupreadable(MyPath.sshpath) != '700' and \
+    #         isgrolupreadable(
+    #                 os.path.join(MyPath.sshpath, 'id_rsa.pub')) != '600':
         return True
+    else:
+        return False
 
 
 #def filecheck(valuesa, valuesb, osbool):

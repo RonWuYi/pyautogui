@@ -21,11 +21,11 @@ class SWITCH:
                     os.system('cp -f {} {}'.format(os.path.join(MyPath.gitlabpath, file), MyPath.sshpath))
 
             if not filepermission():
-                os.system('chmod 700 {}'.format(MyPath.sshpath))
+                os.system('chmod 0600 {}'.format(MyPath.sshpath))
                 time.sleep(1)
-                os.system('chmod 600 {}'.format(os.path.join(MyPath.sshpath, 'id_rsa.pub')))
+                os.system('chmod 0600 {}'.format(os.path.join(MyPath.sshpath, 'id_rsa.pub')))
                 time.sleep(1)
-                os.system('chmod 600 {}'.format(os.path.join(MyPath.sshpath, 'id_rsa')))
+                os.system('chmod 0600 {}'.format(os.path.join(MyPath.sshpath, 'id_rsa')))
         else:
             if curfilehas.filemd5 in curfilehas.LabData.values():
                 for file in os.listdir(MyPath.githubpath):

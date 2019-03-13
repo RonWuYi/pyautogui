@@ -1,4 +1,9 @@
-from data.cuspath import *
+# from data.cuspath import *
+from data.ftp import *
+from ftplib import FTP
 
-mypath = CUSPATH()
-mypath.rootpathcheck()
+ftp = FTP('172.16.66.149', 5)
+
+print(ftp)
+# mypath = CUSPATH()
+# mypath.rootpathcheck()
