@@ -126,3 +126,12 @@ def file_check():
         return False
     else:
         return True
+
+import urllib.request
+
+def internet_on():
+    try:
+        urllib.request.urlopen('https://www.google.com/', timeout=1)
+        return True
+    except Exception as err:
+        return False
