@@ -13,7 +13,7 @@ class SWITCH:
     def run():
         MyPath.rootpathcheck()
         if CUSPATH.inlinux():
-            if curfilehas.filemd5 in curfilehas.LabData.values():
+            if curfilehas.filemd5 in curfilehas.LabData:
                 for file in os.listdir(MyPath.githubpath):
                     os.system('cp -f {} {}'.format(os.path.join(MyPath.githubpath, file), MyPath.sshpath))
             else:
@@ -27,14 +27,13 @@ class SWITCH:
                 time.sleep(1)
                 os.system('chmod 0600 {}'.format(os.path.join(MyPath.sshpath, 'id_rsa')))
         else:
-            if curfilehas.filemd5 in curfilehas.LabData.values():
+            if curfilehas.filemd5 in curfilehas.LabData:
                 for file in os.listdir(MyPath.githubpath):
                     shutil.copy(os.path.join(MyPath.githubpath, file), MyPath.sshpath)
             else:
                 for file in os.listdir(MyPath.gitlabpath):
                     shutil.copy(os.path.join(MyPath.gitlabpath, file), MyPath.sshpath)
-
-        filecheck(curfilehas.HubData.values(), curfilehas.LabData.values())
+        filecheck(curfilehas.LabData, curfilehas.HubData)
 
 
 if __name__ == '__main__':

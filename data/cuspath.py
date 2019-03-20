@@ -17,7 +17,7 @@ class CUSPATH:
         self.gitkey = gitkey
         # self.ospath(inlinux())
         self.ospath()
-        self.rootpathcheck()
+        # self.rootpathcheck()
 
     def ospath(self):
         if CUSPATH.inlinux():
