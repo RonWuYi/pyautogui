@@ -1,5 +1,7 @@
 import os
+import urllib.request
 
+from pathlib import Path
 from ftplib import FTP
 
 
@@ -15,3 +17,20 @@ def myftp(path):
         if file == 'ssh.zip':
             ftp.retrbinary("RETR " + file, open(os.path.join(path, file), 'wb').write)
     ftp.close()
+
+
+def mydropbox():
+    os.chdir(str(Path.home()))
+    try:
+        os.system("wget {https://www.dropbox.com/s/0wvwp5fc521liae/ssh.zip}")
+    except Exception as e:
+        print(e)
+        return
+
+
+def internet_on():
+    try:
+        urllib.request.urlopen('https://www.google.com/', timeout=1)
+        return True
+    except Exception as err:
+        return False

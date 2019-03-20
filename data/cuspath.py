@@ -3,7 +3,7 @@ import zipfile
 import platform
 
 from pathlib import Path
-from .ftp import myftp
+from .ftp import myftp, mydropbox, internet_on
 
 
 class CUSPATH:
@@ -33,17 +33,41 @@ class CUSPATH:
 
     def rootpathcheck(self):
         if not os.path.exists(self.sshpath):
-            myftp(str(Path.home()))
-            zip_ref = zipfile.ZipFile(os.path.join(str(Path.home()), 'ssh.zip'), 'r')
-            zip_ref.extractall(path=self.sshpath)
-            zip_ref.close()
-            os.remove(os.path.join(str(Path.home()), 'ssh.zip'))
+            if internet_on():
+                mydropbox()
+                if os.path.isfile(os.path.join((str(Path.home())), 'ssh.zip')):
+                    zip_ref = zipfile.ZipFile(os.path.join(str(Path.home()), 'ssh.zip'), 'r')
+                    zip_ref.extractall(path=self.sshpath)
+                    zip_ref.close()
+                    os.remove(os.path.join(str(Path.home()), 'ssh.zip'))
+                else:
+                    print("get file from dropbox failed")
+            elif myftp(str(Path.home())):
+                # myftp(str(Path.home()))
+                zip_ref = zipfile.ZipFile(os.path.join(str(Path.home()), 'ssh.zip'), 'r')
+                zip_ref.extractall(path=self.sshpath)
+                zip_ref.close()
+                os.remove(os.path.join(str(Path.home()), 'ssh.zip'))
+            else:
+                print("either cannot connect to Interent or cannot connect to ftp")
         elif len(os.listdir(self.sshpath)) == 0:
-            myftp(str(Path.home()))
-            zip_ref = zipfile.ZipFile(os.path.join(str(Path.home()), 'ssh.zip'), 'r')
-            zip_ref.extractall(path=self.sshpath)
-            zip_ref.close()
-            os.remove(os.path.join(str(Path.home()), 'ssh.zip'))
+            if internet_on():
+                mydropbox()
+                if os.path.isfile(os.path.join((str(Path.home())), 'ssh.zip')):
+                    zip_ref = zipfile.ZipFile(os.path.join(str(Path.home()), 'ssh.zip'), 'r')
+                    zip_ref.extractall(path=self.sshpath)
+                    zip_ref.close()
+                    os.remove(os.path.join(str(Path.home()), 'ssh.zip'))
+                else:
+                    print("get file from dropbox failed")
+            elif myftp(str(Path.home())):
+                # myftp(str(Path.home()))
+                zip_ref = zipfile.ZipFile(os.path.join(str(Path.home()), 'ssh.zip'), 'r')
+                zip_ref.extractall(path=self.sshpath)
+                zip_ref.close()
+                os.remove(os.path.join(str(Path.home()), 'ssh.zip'))
+            else:
+                print("either cannot connect to Interent or cannot connect to ftp")
         else:
             print('id_rsa.pub file already exist')
 

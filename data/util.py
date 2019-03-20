@@ -3,8 +3,9 @@ import subprocess
 import time
 import sys
 
-from .cuspath import CUSPATH
-from .filehash import md5
+
+from data.cuspath import CUSPATH
+from data.filehash import md5
 
 gitlabaddress = 'git@gitlab.emea.irdeto.com'
 githubaddress = 'git@github.com'
@@ -126,12 +127,3 @@ def file_check():
         return False
     else:
         return True
-
-import urllib.request
-
-def internet_on():
-    try:
-        urllib.request.urlopen('https://www.google.com/', timeout=1)
-        return True
-    except Exception as err:
-        return False
