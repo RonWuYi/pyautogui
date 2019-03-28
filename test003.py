@@ -1,8 +1,18 @@
 # wechat redraw
-
+from functools import wraps
 from random import uniform
 
 value = uniform(0.01, 100)
+
+
+def singleton(cls):
+    instances = {}
+    @wraps(cls)
+    def getinstance(*args, **kw):
+        if cls not in instances:
+            instances[cls] = cls(*args, **kw)
+        return instances[cls]
+    return getinstance
 
 
 def lucky_draw(money, size):
@@ -18,7 +28,7 @@ def lucky_draw(money, size):
 
     return money_list
 
-
+@singleton
 class RedEnvelop:
     def __init__(self, money, size):
         self.money = money
@@ -33,26 +43,25 @@ class RedEnvelop:
         else:
             return uniform(0.01, (self.money / self.size) * 2)
 
-    @classmethod
-    def lucky(cls):
-        # little = 0.01
-        money = cls().draw()
-        if money > cls().get:
-            cls().get = money
-        return money
-
-    @classmethod
-    def lucky_list(cls):
-        money_list = []
-        while True:
-            value = uniform(0.01, (cls().money / cls().size) * 2)
-            money_list.append(value)
-            cls().money -= uniform(0.01, (cls().money / cls().size) * 2)
-            cls().size -= 1
-            if cls().size == 1:
-                money_list.append(cls().money)
-                break
-        return money_list
+    # @classmethod
+    # def lucky(cls):
+    #     # little = 0.01
+    #     money = cls().draw()
+    #     if money > cls().get:
+    #         cls().get = money
+    #     return money
+    #
+    # def lucky_list(cls):
+    #     money_list = []
+    #     while True:
+    #         value = uniform(0.01, (cls().money / cls().size) * 2)
+    #         money_list.append(value)
+    #         cls().money -= uniform(0.01, (cls().money / cls().size) * 2)
+    #         cls().size -= 1
+    #         if cls().size == 1:
+    #             money_list.append(cls().money)
+    #             break
+    #     return money_list
 
     def empty(self):
         if self.money == 0:
@@ -73,8 +82,12 @@ class User:
         else:
             self.bankrupt = True
 
-    def fetch(self):
-        self.money += RedEnvelop.lucky()
+    # def fetch(self):
+    #     self.money += RedEnvelop.lucky()
+    #     return self.money
+
+    def fetch(self, money):
+        self.money += money
         return self.money
 
 
@@ -102,3 +115,18 @@ class Game:
                 #https: // coderemixer.com / 2019 / 03 / 26 / wechat - red - envelope - analyze /
 
 
+# def play():
+# while True:
+user_instance = [User(i, 5000) for i in range(10)]
+
+my_draw = RedEnvelop(200, 10)
+
+
+for i in user_instance:
+    print(i.money)
+
+print(my_draw.size)
+
+
+for i in my_draw.size:
+    print(my_draw.draw())
