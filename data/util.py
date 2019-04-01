@@ -5,7 +5,7 @@ import sys
 
 
 from data.cuspath import CUSPATH
-from data.filehash import md5
+from data.fash import md5
 
 gitlabaddress = 'git@gitlab.emea.irdeto.com'
 githubaddress = 'git@github.com'

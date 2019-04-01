@@ -4,8 +4,6 @@ import hashlib
 
 from .cuspath import CUSPATH
 
-MyPath = CUSPATH()
-
 
 def md5(fname):
     hash_md5 = hashlib.md5()
@@ -15,7 +13,7 @@ def md5(fname):
     return hash_md5.hexdigest()
 
 
-class filehash:
+class FASH:
     def __init__(self):
         pass
         # self.LabData = self.loadlabjson()
@@ -31,7 +29,7 @@ class filehash:
                     with open(json_file, 'r') as f:
                         return json.load(f)
                 else:
-                    print("no json file stored at {}.".format(MyPath.sshpath))
+                    print("no json file stored at {}.".format(CUSPATH.sshpath))
 
 
     # @staticmethod
@@ -43,24 +41,24 @@ class filehash:
 
     # @staticmethod
     def loadhubjson(self):
-        if os.path.isdir(MyPath.sshpath):
-            for files in os.listdir(MyPath.sshpath):
+        if os.path.isdir(CUSPATH.sshpath):
+            for files in os.listdir(CUSPATH.sshpath):
                 if len(files) > 0:
                     if files == 'github.json':
-                        with open(os.path.join(MyPath.sshpath, files), 'r') as f:
+                        with open(os.path.join(CUSPATH.sshpath, files), 'r') as f:
                             return json.load(f)
                 else:
-                    print("no json file stored at {}.".format(MyPath.sshpath))
+                    print("no json file stored at {}.".format(CUSPATH.sshpath))
         else:
-            os.makedirs(MyPath.sshpath)
-            print("no ssh file at {}.".format(MyPath.sshpath))
+            os.makedirs(CUSPATH.sshpath)
+            print("no ssh file at {}.".format(CUSPATH.sshpath))
 
     def currentfile(self):
-        if os.path.isdir(MyPath.sshpath):
-            if len(os.listdir(MyPath.sshpath))>0:
-                for files in os.listdir(MyPath.sshpath):
+        if os.path.isdir(CUSPATH.sshpath):
+            if len(os.listdir(CUSPATH.sshpath))>0:
+                for files in os.listdir(CUSPATH.sshpath):
                     if files == 'id_rsa.pub':
-                        return md5(os.path.join(MyPath.sshpath, files))
+                        return md5(os.path.join(CUSPATH.sshpath, files))
                         # self.filemd5 = md5(os.path.join(MyPath.sshpath, files))
             else:
                 print('no rsa key file and folder')

@@ -2,10 +2,10 @@ import shutil
 
 from data.util import *
 from data.cuspath import CUSPATH
-from data.filehash import filehash
+from data.fash import FASH
 
 MyPath = CUSPATH()
-curfilehas = filehash()
+curfilehas = FASH()
 
 
 class SWITCH:
