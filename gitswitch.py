@@ -2,37 +2,37 @@ import shutil
 
 from data.util import *
 from data.cuspath import CUSPATH
-from data.filehash import filehash
+from data.fash import FASH
 
-MyPath = CUSPATH()
-curfilehas = filehash()
+# MyPath = CUSPATH()
+curfilehas = FASH()
 
 
 class SWITCH:
     @staticmethod
     def run():
-        MyPath.rootpathcheck()
+        CUSPATH.rootpathcheck()
         if CUSPATH.inlinux():
             if curfilehas.filemd5 in curfilehas.LabData:
-                for file in os.listdir(MyPath.githubpath):
-                    os.system('cp -f {} {}'.format(os.path.join(MyPath.githubpath, file), MyPath.sshpath))
+                for file in os.listdir(CUSPATH.githubpath):
+                    os.system('cp -f {} {}'.format(os.path.join(CUSPATH.githubpath, file), CUSPATH.sshpath))
             else:
-                for file in os.listdir(MyPath.gitlabpath):
-                    os.system('cp -f {} {}'.format(os.path.join(MyPath.gitlabpath, file), MyPath.sshpath))
+                for file in os.listdir(CUSPATH.gitlabpath):
+                    os.system('cp -f {} {}'.format(os.path.join(CUSPATH.gitlabpath, file), CUSPATH.sshpath))
 
             if not filepermission():
-                os.system('chmod 0600 {}'.format(MyPath.sshpath))
+                os.system('chmod 0600 {}'.format(CUSPATH.sshpath))
                 time.sleep(1)
-                os.system('chmod 0600 {}'.format(os.path.join(MyPath.sshpath, 'id_rsa.pub')))
+                os.system('chmod 0600 {}'.format(os.path.join(CUSPATH.sshpath, 'id_rsa.pub')))
                 time.sleep(1)
-                os.system('chmod 0600 {}'.format(os.path.join(MyPath.sshpath, 'id_rsa')))
+                os.system('chmod 0600 {}'.format(os.path.join(CUSPATH.sshpath, 'id_rsa')))
         else:
             if curfilehas.filemd5 in curfilehas.LabData:
-                for file in os.listdir(MyPath.githubpath):
-                    shutil.copy(os.path.join(MyPath.githubpath, file), MyPath.sshpath)
+                for file in os.listdir(CUSPATH.githubpath):
+                    shutil.copy(os.path.join(CUSPATH.githubpath, file), CUSPATH.sshpath)
             else:
-                for file in os.listdir(MyPath.gitlabpath):
-                    shutil.copy(os.path.join(MyPath.gitlabpath, file), MyPath.sshpath)
+                for file in os.listdir(CUSPATH.gitlabpath):
+                    shutil.copy(os.path.join(CUSPATH.gitlabpath, file), CUSPATH.sshpath)
         filecheck(curfilehas.LabData, curfilehas.HubData)
 
 
