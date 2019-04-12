@@ -1,4 +1,3 @@
-import os
 import subprocess
 import time
 import sys
@@ -6,7 +5,6 @@ import json
 import hashlib
 
 from .const import *
-# from data.fash import md5
 
 
 def isgrolupreadable(filepath):
@@ -123,14 +121,22 @@ def md5(fname):
     return hash_md5.hexdigest()
 
 
-def createjson(folder, json_file):
-    if os.path.isdir(folder):
-        for x, y, z in os.walk(folder):
-            if len(z) > 0 and json_file in z:
-                with open(json_file, 'r') as f:
-                    return json.load(f)
-            else:
-                print("no json file stored at {}.".format(sshpath))
+def createjson(folder1, folder2, json_file):
+    # if os.path.isdir(folder):
+    #     for x, y, z in os.walk(folder):
+    #         if len(z) > 0 and json_file in z:
+    #             with open(json_file, 'w') as f:
+    #                 return json.load(f)
+    #         else:
+    #             print("no json file stored at {}.".format(sshpath))
+    my_dict = {}
+    for x, y, z in os.walk(folder1):
+        if len(z) > 0:
+            for i in z:
+                my_dict[i] = md5(os.path.join(x, i))
+
+    with open(os.path.join(folder2, json_file), 'w') as f:
+        json.dump(my_dict, f)
 
 
 def loadjson(folder, file):
@@ -163,4 +169,12 @@ def currentfile():
             print('no rsa key file and folder')
     else:
         print('no rsa key file and folder')
+
+
+def changePermission(folder):
+    for x, y, z in os.walk(folder):
+        if len(z) > 0:
+            for i in z:
+                os.subprocess
+                os.system('sudo chmod 0777 {}'.format(os.path.join(x, i)))
 

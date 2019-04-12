@@ -64,3 +64,7 @@ def rootpathcheck():
             print("either cannot connect to Interent or cannot connect to ftp")
     else:
         print('id_rsa.pub file already exist')
+
+
+if __name__ == '__main__':
+    print(sshpath)
