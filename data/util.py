@@ -2,18 +2,11 @@ import os
 import subprocess
 import time
 import sys
+import json
+import hashlib
 
-
-from data.cuspath import CUSPATH
-from data.fash import md5
-
-gitlabaddress = 'git@gitlab.emea.irdeto.com'
-githubaddress = 'git@github.com'
-
-bspath = "C:\\Program Files\\Git\\bin\\"
-bsfilepath = "C:\\Program Files\\Git\\bin\\bash.exe"
-
-MyPath = CUSPATH()
+from .const import *
+# from data.fash import md5
 
 
 def isgrolupreadable(filepath):
@@ -22,45 +15,38 @@ def isgrolupreadable(filepath):
 
 
 def filepermission():
-    if int(isgrolupreadable(MyPath.sshpath)) > 600 and \
+    if int(isgrolupreadable(sshpath)) > 600 and \
         int(isgrolupreadable(
-                    os.path.join(MyPath.sshpath, 'id_rsa.pub'))) > 600:
-    # if isgrolupreadable(MyPath.sshpath) != '700' and \
-    #         isgrolupreadable(
-    #                 os.path.join(MyPath.sshpath, 'id_rsa.pub')) != '600':
+                    os.path.join(sshpath, 'id_rsa.pub'))) > 600:
         return True
     else:
         return False
 
 
-#def filecheck(valuesa, valuesb, osbool):
-def filecheck(valuesa, valuesb):
+def filecheck(labvalues, hubvalues):
     global checkfilemd5
 
-    # if osbool:
-    for files in os.listdir(MyPath.sshpath):
+    for files in os.listdir(sshpath):
         if files == 'id_rsa.pub':
-            checkfilemd5 = md5(os.path.join(MyPath.sshpath, files))
+            checkfilemd5 = md5(os.path.join(sshpath, files))
 
-    # if checkfilemd5 in HubData.values():
-    if checkfilemd5 in valuesa:
+    if checkfilemd5 in hubvalues:
         os.system('git config --global user.name "RonWuYi"')
         time.sleep(1)
         os.system('git config --global user.email "lyshmily@outlook.com"')
         time.sleep(1)
         print('git files changed to github Internet')
-        if gitconnectioncheck(githubaddress, CUSPATH.inlinux()):
+        if gitconnectioncheck(githubaddress, inlinux()):
             print('Connect to github successfully')
         else:
             print('Connect to github failed')
-    elif checkfilemd5 in valuesb:
-        # if checkfilemd5 in LabData.values():
+    elif checkfilemd5 in labvalues:
         os.system('git config --global user.name "ron.wu"')
         time.sleep(1)
         os.system('git config --global user.email "ron.wu@irdeto.com"')
         time.sleep(1)
         print('git files changed to gitlab EMEA')
-        if gitconnectioncheck(gitlabaddress, CUSPATH.inlinux()):
+        if gitconnectioncheck(gitlabaddress, inlinux()):
             print('Connect to gitlab successfully')
         else:
             print('Connect to gitlab failed')
@@ -88,12 +74,12 @@ def gitconnectioncheck(whichgit, osbool):
                 print(e)
                 return False
     else:
-        if bspath not in sys.path:
-            sys.path.append(bspath)
+        if bsPath_win not in sys.path:
+            sys.path.append(bsPath_win)
 
-        os.system('cd {}'.format(bspath))
+        os.system('cd {}'.format(bsPath_win))
         try:
-            cmdoutput = subprocess.check_output('{} -c "ssh -T {}"'.format(bsfilepath, whichgit), timeout=5, stderr=subprocess.STDOUT)
+            cmdoutput = subprocess.check_output('{} -c "ssh -T {}"'.format(bsFilePath_win, whichgit), timeout=5, stderr=subprocess.STDOUT)
             if cmdoutput[0:2] == b'Hi' or cmdoutput[0:7] == b'Welcome':
 
                 return True
@@ -116,14 +102,65 @@ def gitconnectioncheck(whichgit, osbool):
 
 
 def folder_check():
-    if os.path.isdir(MyPath.sshpath):
+    if os.path.isdir(sshpath):
         return True
     else:
         return False
 
 
 def file_check():
-    if len(os.listdir(MyPath.sshpath)) == 0:
+    if len(os.listdir(sshpath)) == 0:
         return False
     else:
         return True
+
+
+def md5(fname):
+    hash_md5 = hashlib.md5()
+    with open(fname, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
+
+def createjson(folder, json_file):
+    if os.path.isdir(folder):
+        for x, y, z in os.walk(folder):
+            if len(z) > 0 and json_file in z:
+                with open(json_file, 'r') as f:
+                    return json.load(f)
+            else:
+                print("no json file stored at {}.".format(sshpath))
+
+
+def loadjson(folder, file):
+    if os.path.isfile(os.path.join(folder, file)):
+        with open(file, 'r') as f:
+            return json.load(f)
+
+
+def loadhubjson():
+    if os.path.isdir(sshpath):
+        for files in os.listdir(sshpath):
+            if len(files) > 0:
+                if files == 'github.json':
+                    with open(os.path.join(sshpath, files), 'r') as f:
+                        return json.load(f)
+            else:
+                print("no json file stored at {}.".format(sshpath))
+    else:
+        os.makedirs(sshpath)
+        print("no ssh file at {}.".format(sshpath))
+
+
+def currentfile():
+    if os.path.isdir(sshpath):
+        if len(os.listdir(sshpath))>0:
+            for files in os.listdir(sshpath):
+                if files == 'id_rsa.pub':
+                    return md5(os.path.join(sshpath, files))
+        else:
+            print('no rsa key file and folder')
+    else:
+        print('no rsa key file and folder')
+
