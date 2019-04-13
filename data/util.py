@@ -5,6 +5,7 @@ import json
 import hashlib
 
 from .const import *
+from subprocess import call
 
 
 def isgrolupreadable(filepath):
@@ -22,11 +23,11 @@ def filepermission():
 
 
 def filecheck(labvalues, hubvalues):
-    global checkfilemd5
-
-    for files in os.listdir(sshpath):
-        if files == 'id_rsa.pub':
-            checkfilemd5 = md5(os.path.join(sshpath, files))
+    # global checkfilemd5
+    #
+    # for files in os.listdir(sshpath):
+    #     if files == 'id_rsa.pub':
+    checkfilemd5 = md5(os.path.join(gitkey))
 
     if checkfilemd5 in hubvalues:
         os.system('git config --global user.name "RonWuYi"')
@@ -172,9 +173,16 @@ def currentfile():
 
 
 def changePermission(folder):
+    somecommand1 = 'chmod 0777 {}'.format(folder)
+    pwd = 'a'
+    call('echo {} | sudo -S {}'.format(pwd, somecommand1), shell=True)
+    # os.popen("sudo -S {}".format(somecommand1), 'w').write("a")
+    # subprocess.Popen(somecommand1, stdin=PIPE).communicate()
+
     for x, y, z in os.walk(folder):
         if len(z) > 0:
             for i in z:
-                os.subprocess
-                os.system('sudo chmod 0777 {}'.format(os.path.join(x, i)))
+                somecommand2 = 'chmod 0777 {}'.format(os.path.join(x, i))
+                # pwd = 'a'
+                call('echo {} | sudo -S {}'.format(pwd, somecommand2), shell=True)
 

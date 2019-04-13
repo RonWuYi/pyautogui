@@ -11,7 +11,7 @@ def run():
             gitlabjson = loadjson(sshpath, os.path.join(sshpath, labjson))
             if inlinux():
                 # changePermission(sshpath)
-                if md5(gitkey) in gitlabjson:
+                if md5(gitkey) in gitlabjson.values():
                     for file in os.listdir(githubpath):
                         os.system('cp -f {} {}'.format(os.path.join(githubpath, file), sshpath))
                 else:
@@ -25,13 +25,14 @@ def run():
                 #     time.sleep(1)
                 #     os.system('chmod 0600 {}'.format(os.path.join(sshpath, 'id_rsa')))
             else:
-                if md5(gitkey) in githubjson:
+                if md5(gitkey) in githubjson.values():
                     for file in os.listdir(githubpath):
                         shutil.copy(os.path.join(githubpath, file), sshpath)
                 else:
                     for file in os.listdir(gitlabpath):
                         shutil.copy(os.path.join(gitlabpath, file), sshpath)
-            filecheck(gitlabjson, githubjson)
+            filecheck(gitlabjson.values(), githubjson.values())
+            break
         elif len(z) > 0 and (hubjson not in z or labjson not in z) and os.path.exists(githubpath):
             if os.path.exists(gitlabpath):
                 createjson(gitlabpath, sshpath, labjson)
@@ -44,7 +45,7 @@ def run():
 
             if inlinux():
                 # changePermission(sshpath)
-                if md5(gitkey) in gitlabjson:
+                if md5(gitkey) in gitlabjson.values():
                     for file in os.listdir(githubpath):
                         os.system('cp -f {} {}'.format(os.path.join(githubpath, file), sshpath))
                 else:
@@ -58,17 +59,21 @@ def run():
                 #     time.sleep(1)
                 #     os.system('chmod 0600 {}'.format(os.path.join(sshpath, 'id_rsa')))
             else:
-                if md5(gitkey) in githubjson:
+                if md5(gitkey) in githubjson.values():
                     for file in os.listdir(githubpath):
                         shutil.copy(os.path.join(githubpath, file), sshpath)
                 else:
                     for file in os.listdir(gitlabpath):
                         shutil.copy(os.path.join(gitlabpath, file), sshpath)
+            filecheck(gitlabjson.values(), githubjson.values())
+            break
         elif len(z) > 0 and (hubjson not in z or labjson not in z) and not os.path.exists(githubpath):
             rootpathcheck()
+            # filecheck(gitlabjson, githubjson)
+            break
 
 
 if __name__ == '__main__':
-    if inlinux():
-        changePermission(sshpath)
+    # if inlinux():
+    #     changePermission(sshpath)
     run()
