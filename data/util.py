@@ -23,10 +23,6 @@ def filepermission():
 
 
 def filecheck(labvalues, hubvalues):
-    # global checkfilemd5
-    #
-    # for files in os.listdir(sshpath):
-    #     if files == 'id_rsa.pub':
     checkfilemd5 = md5(os.path.join(gitkey))
 
     if checkfilemd5 in hubvalues:
@@ -35,22 +31,22 @@ def filecheck(labvalues, hubvalues):
         os.system('git config --global user.email "lyshmily@outlook.com"')
         time.sleep(1)
         print('git files changed to github Internet')
-        if gitconnectioncheck(githubaddress, inlinux()):
-            print('Connect to github successfully')
-        else:
-            print('Connect to github failed')
+        # if gitconnectioncheck(githubaddress, inlinux()):
+        #     print('Connect to github successfully')
+        # else:
+        #     print('Connect to github failed')
     elif checkfilemd5 in labvalues:
         os.system('git config --global user.name "ron.wu"')
         time.sleep(1)
         os.system('git config --global user.email "ron.wu@irdeto.com"')
         time.sleep(1)
         print('git files changed to gitlab EMEA')
-        if gitconnectioncheck(gitlabaddress, inlinux()):
-            print('Connect to gitlab successfully')
-        else:
-            print('Connect to gitlab failed')
+        # if gitconnectioncheck(gitlabaddress, inlinux()):
+        #     print('Connect to gitlab successfully')
+        # else:
+        #     print('Connect to gitlab failed')
     else:
-        print("Switch git failed!")
+        print("Switch git failed, cannot find hash key form json libray!")
 
 
 def gitconnectioncheck(whichgit, osbool):
@@ -98,6 +94,11 @@ def gitconnectioncheck(whichgit, osbool):
             except AttributeError as e:
                 print(e)
                 return False
+
+    if gitconnectioncheck(githubaddress, inlinux()):
+        print('Connect to github successfully')
+    else:
+        print('Connect to github failed')
 
 
 def folder_check():
