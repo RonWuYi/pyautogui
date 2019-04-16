@@ -19,10 +19,10 @@ def run():
             else:
                 if md5(gitkey) in githubjson.values():
                     for file in os.listdir(githubpath):
-                        shutil.copy(os.path.join(githubpath, file), sshpath)
+                        shutil.copy(os.path.join(gitlabpath, file), sshpath)
                 else:
                     for file in os.listdir(gitlabpath):
-                        shutil.copy(os.path.join(gitlabpath, file), sshpath)
+                        shutil.copy(os.path.join(githubpath, file), sshpath)
             filecheck(gitlabjson.values(), githubjson.values())
             break
         elif len(z) > 0 and (hubjson not in z or labjson not in z) and os.path.exists(githubpath):
@@ -44,11 +44,11 @@ def run():
                         os.system('cp -f {} {}'.format(os.path.join(gitlabpath, file), sshpath))
             else:
                 if md5(gitkey) in githubjson.values():
-                    for file in os.listdir(githubpath):
-                        shutil.copy(os.path.join(githubpath, file), sshpath)
-                else:
                     for file in os.listdir(gitlabpath):
                         shutil.copy(os.path.join(gitlabpath, file), sshpath)
+                else:
+                    for file in os.listdir(githubpath):
+                        shutil.copy(os.path.join(githubpath, file), sshpath)
             filecheck(gitlabjson.values(), githubjson.values())
             break
         elif len(z) > 0 and (hubjson not in z or labjson not in z) and not os.path.exists(githubpath):
