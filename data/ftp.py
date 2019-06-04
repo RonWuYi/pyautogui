@@ -22,7 +22,7 @@ def myftp(path):
 def mydropbox():
     os.chdir(str(Path.home()))
     try:
-        os.system("wget {https://www.dropbox.com/s/0wvwp5fc521liae/ssh.zip}")
+        os.system("wget https://www.dropbox.com/s/0wvwp5fc521liae/ssh.zip")
     except Exception as e:
         print(e)
         return

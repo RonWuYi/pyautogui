@@ -59,10 +59,8 @@ def gitconnectioncheck(whichgit, osbool):
             out_bytes = e.output
             try:
                 code = e.returncode
-                # print(out_bytes)
                 if out_bytes[0:2] == b'Hi' or out_bytes[0:7] == b'Welcome' and code == 1:
                     return True
-                # print(code)
                 else:
                     return False
             except AttributeError as e:
@@ -76,25 +74,23 @@ def gitconnectioncheck(whichgit, osbool):
         try:
             cmdoutput = subprocess.check_output('{} -c "ssh -T {}"'.format(bsFilePath_win, whichgit), timeout=5, stderr=subprocess.STDOUT)
             if cmdoutput[0:2] == b'Hi' or cmdoutput[0:7] == b'Welcome':
-
                 return True
-                # print(code)
             else:
                 return False
         except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
             out_bytes = e.output
             try:
                 code = e.returncode
-                # print(out_bytes)
                 if out_bytes[0:2] == b'Hi' or out_bytes[0:7] == b'Welcome' and code == 1:
                     return True
-                # print(code)
                 else:
                     return False
             except AttributeError as e:
                 print(e)
                 return False
 
+
+def check_wrapper():
     if gitconnectioncheck(githubaddress, inlinux()):
         print('Connect to github successfully')
     else:
@@ -123,7 +119,7 @@ def md5(fname):
     return hash_md5.hexdigest()
 
 
-def createjson(folder1, folder2, json_file):
+def create_json(folder1, folder2, json_file):
     # if os.path.isdir(folder):
     #     for x, y, z in os.walk(folder):
     #         if len(z) > 0 and json_file in z:
