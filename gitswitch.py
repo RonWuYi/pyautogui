@@ -1,8 +1,10 @@
+import os
 import shutil
 
-from data.util import *
-from data.const import *
-
+# from data.util import *
+# from data.const import *
+from data.util import sshpath, inlinux, md5, filecheck, check_wrapper, loadjson, create_json, rootpathcheck
+from data.const import hubjson, labjson, githubpath, gitlabpath, gitkey
 
 def run():
     if os.path.exists(sshpath):
