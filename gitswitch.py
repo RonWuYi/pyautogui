@@ -8,7 +8,7 @@ from data.const import hubjson, labjson, githubpath, gitlabpath, gitkey
 
 def run():
     if os.path.exists(sshpath):
-        for x, y, z in os.walk(sshpath):
+        for _, _, z in os.walk(sshpath):
             if len(z) > 0 and hubjson in z and labjson in z:
                 githubjson = loadjson(sshpath, os.path.join(sshpath, hubjson))
                 gitlabjson = loadjson(sshpath, os.path.join(sshpath, labjson))
