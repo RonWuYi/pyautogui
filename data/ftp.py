@@ -7,7 +7,7 @@ from ftplib import FTP
 
 file_url = "https://www.dropbox.com/s/0wvwp5fc521liae/ssh.zip"
 
-def myftp(path):
+def myftp(path: str)-> None:
     try:
         ftp = FTP('172.16.66.149', 5)
     except (ConnectionResetError, ConnectionRefusedError, ConnectionError, ConnectionAbortedError) as e:
