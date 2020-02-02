@@ -27,7 +27,7 @@ def inlinux():
         return False
 
 
-def rootpathcheck():
+def rootpathcheck() -> None:
     if not os.path.exists(sshpath):
         if internet_on():
             mydropbox()

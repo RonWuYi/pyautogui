@@ -1,9 +1,11 @@
 import os
 import urllib.request
+from subprocess import Popen, PIPE
 
 from pathlib import Path
 from ftplib import FTP
 
+file_url = "https://www.dropbox.com/s/0wvwp5fc521liae/ssh.zip"
 
 def myftp(path):
     try:
@@ -19,16 +21,21 @@ def myftp(path):
     ftp.close()
 
 
-def mydropbox():
-    os.chdir(str(Path.home()))
+def mydropbox() -> None:
     try:
-        os.system("wget https://www.dropbox.com/s/0wvwp5fc521liae/ssh.zip")
+        os.chdir(str(Path.home()))
+    except OSError as e:
+        print(e)
+    try:
+        # os.system("wget https://www.dropbox.com/s/0wvwp5fc521liae/ssh.zip")
+        p = Popen(["powershell.exe", "wget", file_url], stdout=PIPE)
+        p.communicate()
     except Exception as e:
         print(e)
-        return
+        # return
 
 
-def internet_on():
+def internet_on() -> bool:
     try:
         urllib.request.urlopen('https://www.google.com/', timeout=1)
         return True

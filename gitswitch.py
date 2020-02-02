@@ -6,8 +6,8 @@ import shutil
 from data.util import sshpath, inlinux, md5, filecheck, check_wrapper, loadjson, create_json, rootpathcheck
 from data.const import hubjson, labjson, githubpath, gitlabpath, gitkey
 
-def run():
-    if os.path.exists(sshpath):
+def run() -> None:
+    if os.path.exists(sshpath) and len(os.listdir(sshpath)):
         for _, _, z in os.walk(sshpath):
             if len(z) > 0 and hubjson in z and labjson in z:
                 githubjson = loadjson(sshpath, os.path.join(sshpath, hubjson))
@@ -56,6 +56,9 @@ def run():
                 filecheck(gitlabjson.values(), githubjson.values())
                 check_wrapper()
                 break
+    elif os.path.exists(sshpath) and not len(os.listdir(sshpath)):
+        # folder_file = False
+        rootpathcheck()
     else:
         rootpathcheck()
 
