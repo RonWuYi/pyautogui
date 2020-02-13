@@ -73,6 +73,9 @@ for i in sn_list:
     print(response.text)
     print(type(response.text))
 
+
+
+
 # cursor.execute("select * from casmartcardsector;")
 # casmartcardsector_row = cursor.fetchall()
 
